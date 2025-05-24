@@ -1,24 +1,32 @@
 const express = require('express');
 const fs = require('fs-extra');
-const { exec } = require("child_process");
 let router = express.Router();
 const pino = require("pino");
 const { Boom } = require("@hapi/boom");
 const MESSAGE = process.env.MESSAGE || `
-*SESSION GENERATED SUCCESSFULY* ✅
+🔥 𝐊ąìʂҽղ-𝐌𝐃 | 𝐒𝐞𝐬𝐬𝐢𝐨𝐧 𝐂𝐨𝐧𝐧𝐞𝐜𝐭𝐞𝐝 ✅
+🔥 Your Bot is Now Alive, Royal & Ready to Rock! 🔥
+━━━━━━━━━━━━━━━━━━━━━━
+🟢 Session pair code Successfully ✅
+🔗 Connect for Instant Support & Royal Help:
+📌 WhatsApp Group:
+https://chat.whatsapp.com/Ja7bWhgrFkc3V67yBjchM2
+━━━━━━━━━━━━━━━━━━━━━━
+📦 GitHub Repo — Star It For Power Boost!
+✴️ 𝐊ąìʂҽղ-𝐌𝐃 GitHub:
+🪂github.com/sumon9836/KAISEN-MD.git
+━━━━━━━━━━━━━━━━━━━━━━
+🚀 Deploy Your Royal Bot Now
+👑 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐝 𝐁𝐲: 𝐋𝐨𝐯𝐞𝐥𝐲-𝐁𝐨𝐲.𝐱.𝐒𝐮𝐦𝐨𝐧
+🍉 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲: 𝐊ąìʂҽղ 𝐈𝐧𝐭𝐞𝐥 𝐂𝐨𝐫𝐞™
+✨ Deploy & Rule Like a True Legend
+━━━━━━━━━━━━━━━━━━━━━━
+📝 Royal Quote of the Bot:
 
-*Gɪᴠᴇ ᴀ ꜱᴛᴀʀ ᴛᴏ ʀᴇᴘᴏ ꜰᴏʀ ᴄᴏᴜʀᴀɢᴇ* 🌟
-https://github.com/GuhailTechInfo/ULTRA-MD
-
-*Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ ꜰᴏʀ ϙᴜᴇʀʏ* 💭
-https://t.me/GlobalBotInc
-https://whatsapp.com/channel/0029VagJIAr3bbVBCpEkAM07
-
-
-*Yᴏᴜ-ᴛᴜʙᴇ ᴛᴜᴛᴏʀɪᴀʟꜱ* 🪄 
-https://youtube.com/GlobalTechInfo
-
-*ULTRA-MD--WHATTSAPP-BOT* 🥀
+> “𝐁𝐨𝐭 𝐁𝐲 𝐍𝐚𝐦𝐞, 𝐋𝐞𝐠𝐞𝐧𝐝 𝐁𝐲 𝐅𝐚𝐦𝐞”
+— Royalty Runs in the Code
+━━━━━━━━━━━━━━━━━━━━━━
+🦾 𝐊ąìʂҽղ_𝐌𝐃 || 𝐒𝐚𝐦𝐢𝐧_𝐒𝐮𝐦𝐨𝐧 || 𝐑𝐨𝐲𝐚𝐥𝐁𝐨𝐭
 `;
 
 const { upload } = require('./mega');
