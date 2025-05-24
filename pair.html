@@ -125,7 +125,7 @@
         <h3 class="centered-text">𝐊ąìʂҽղ-𝐌𝐃</h3>
         <h6>Enter your number with country code</h6>
         <div class="input-container">
-          <input placeholder="923000000000" type="number" id="number">
+          <input placeholder="917000000000" type="number" id="number">
           <button id="submit">Submit</button>
         </div>
         <a id="waiting-message" class="centered-text" style="display: none;">Please wait for some time</a>
@@ -144,7 +144,7 @@
     async function Copy() {
       let text = document.getElementById("copy").innerText;
       let obj = document.getElementById("copy");
-      await navigator.clipboard.writeText(obj.innerText.replace(' CODE: ', ''));
+      await navigator.clipboard.writeText(obj.innerText.replace(' tap to copy: ', ''));
       obj.innerText = "COPIED";
       obj.style = "color:green;font-weight:bold";
       setTimeout(() => {
