@@ -142,15 +142,16 @@
     let c = document.getElementById("number");
 
     async function Copy() {
-      let text = document.getElementById("copy").innerText;
-      let obj = document.getElementById("copy");
-      await navigator.clipboard.writeText(obj.innerText.replace(' tap to copy: ', ''));
-      obj.innerText = "COPIED";
-      obj.style = "color:green;font-weight:bold";
-      setTimeout(() => {
-        obj.innerText = text;
-        obj.style = "color:#ff1493;font-weight:bold";
-      }, 500);
+  let text = document.getElementById("copy").innerText;
+  let obj = document.getElementById("copy");
+  let code = obj.querySelector('span').innerText; // <span> ট্যাগের ভেতরের টেক্সটটা বের করা হলো
+  await navigator.clipboard.writeText(code); // শুধু কোডটা কপি করা হলো
+  obj.innerText = "COPIED";
+  obj.style = "color:green;font-weight:bold";
+  setTimeout(() => {
+    obj.innerText = text;
+    obj.style = "color:#ff1493;font-weight:bold";
+  }, 500);
     }
 
     b.addEventListener("click", async (e) => {
