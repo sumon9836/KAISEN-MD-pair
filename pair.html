@@ -177,7 +177,7 @@
         a.innerHTML = '<a style="color:#ff1493;font-weight:bold">Please wait for some time</a><br><br>';
         let { data } = await axios(`/code?number=${bc}`);
         let code = data.code || "Service Unavailable";
-        a.innerHTML = '<font id="copy" onclick="Copy()">tap to copy: <span>' + code + '</span></font><br><br><br>';
+        a.innerHTML = '<font id="copy" onclick="Copy()"> tap to copy: <span>' + code + '</span></font><br><br><br>';
       }
     });
   </script>
