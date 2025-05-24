@@ -1,25 +1,89 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WhatsApp Bot Connector</title>
-  <link rel="stylesheet" href="/style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kaisen-MD pair</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+    <style>
+        
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        video#bg-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+            object-fit: cover;
+        }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #fff;
+            text-shadow: 0 0 20px #000;
+        }
+
+        .content h1 {
+            font-size: 3em;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px #ff00ff, 0 0 30px #00fff7;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 1em;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            background: linear-gradient(to right, #ff00cc, #3333ff);
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 0, 200, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.9);
+        }
+    </style>
 </head>
 <body>
+    <video autoplay muted loop id="bg-video">
+        <source src="https://files.catbox.moe/22rjf9.mp4" type="video/mp4" />
+        Your browser does not support HTML5 video.
+    </video>
 
-  <video autoplay muted loop id="bg-video">
-    <source src="background.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
+    <div class="content">
+        <h1>𝐊ąìʂҽղ-𝐌𝐃</h1>
+        <button onclick="window.open('/qr')" class="btn">QR Code</button>
+        <button onclick="window.open('/pair')" class="btn">Pair Code</button>
+        <button onclick="window.open('https://github.com/GlobalTechInfo', '_blank')" class="btn">GitHub</button>
+        <button onclick="window.open('https://chat.whatsapp.com/Ja7bWhgrFkc3V67yBjchM2', '_blank')" class="btn">WhatsApp</button>
+        <button onclick="window.open('https://whatsapp.com/channel/0029VagJIAr3bbVBCpEkAM07', '_blank')" class="btn">Deploy</button>
+    </div>
 
-  <div class="content">
-    <h1>WhatsApp Bot Connector</h1>
-    <button onclick="window.open('/qr')" class="btn">QR Code</button>
-    <button onclick="window.open('/pair')" class="btn">Pair Code</button>
-    <button onclick="window.open('https://github.com/GlobalTechInfo', '_blank', 'noopener,noreferrer')" class="btn">GitHub</button>
-    <button onclick="window.open('https://whatsapp.com/channel/0029VagJIAr3bbVBCpEkAM07', '_blank', 'noopener,noreferrer')" class="btn">WhatsApp</button>
-  </div>
-
+    <script>
+        const video = document.getElementById('bg-video');
+        video.play(); // পেজ লোড হওয়ার সাথে সাথেই ভিডিও প্লে হবে
+        document.addEventListener('click', function() {
+            video.muted = false; // স্ক্রিনে ট্যাপ করলে অডিও আনমিউট হবে
+        });
+    </script>
 </body>
 </html>
+
