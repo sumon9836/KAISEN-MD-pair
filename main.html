@@ -6,6 +6,40 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kaisen-MD pair</title>
+    <style>
+        .qr-container {
+            position: relative;
+            display: inline-block;
+        }
+        .timer {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 16px;
+            color: #ff0000;
+        }
+    </style>
+    <script>
+        function startQRTimer(duration) {
+            const timerDisplay = document.getElementById('timer');
+            let timeLeft = duration;
+            
+            const countdown = setInterval(() => {
+                if(timeLeft <= 0) {
+                    clearInterval(countdown);
+                    const qrContainer = document.getElementById('qr-container');
+                    if(qrContainer) {
+                        qrContainer.innerHTML = '<p>QR Code Expired</p>';
+                    }
+                    return;
+                }
+                
+                timerDisplay.textContent = `Expire QR: ${timeLeft} seconds`;
+                timeLeft--;
+            }, 1000);
+        }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
     <style>
         

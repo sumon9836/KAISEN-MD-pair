@@ -48,7 +48,22 @@ router.get('/', async (req, res) => {
                         res.setHeader('Content-Type', 'image/png');
                         try {
                             const qrBuffer = await toBuffer(qr);
-                            res.end(qrBuffer);
+                            res.write(JSON.stringify({ 
+                                qr: qrBuffer.toString('base64'),
+                                expireIn: 60
+                            }));
+                            res.end();
+                            
+                            // Clear QR after 60 seconds
+                            setTimeout(() => {
+                                if (!connection) {
+                                    Smd.ev.emit("connection.update", { 
+                                        qr: null,
+                                        connection: "close",
+                                        lastDisconnect: { error: new Boom("QR Code Expired", { statusCode: 408 }) }
+                                    });
+                                }
+                            }, 60000);
                             return;
                         } catch (error) {
                             console.error("Error generating QR Code buffer:", error);
