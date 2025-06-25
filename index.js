@@ -3,6 +3,7 @@ const app = express();
 __path = process.cwd()
 const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 8000;
+const HOST = process.env.HOST || '0.0.0.0';
 let server = require('./qr'),
     code = require('./pair');
 require('events').EventEmitter.defaultMaxListeners = 500;
@@ -16,8 +17,8 @@ res.sendFile(__path + '/main.html')
 })
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:` + PORT)
+app.listen(PORT, HOST, () => {
+    console.log(`Server running on http://${HOST}:${PORT}`)
 })
 
 module.exports = app

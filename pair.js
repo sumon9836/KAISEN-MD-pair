@@ -13,7 +13,7 @@ const MESSAGE = process.env.MESSAGE || `
 https://chat.whatsapp.com/Ja7bWhgrFkc3V67yBjchM2
 ━━━━━━━━━━━━━━━━━━━━━━
 📦 GitHub Repo — Star It For Power Boost!
-✴️ 𝐊ąìʂҽղ-𝐌𝐃 GitHub:
+✴️ 𝐊ąìʂҽɳ-𝐌𝐃 GitHub:
 🪂github.com/sumon9836/KAISEN-MD.git
 ━━━━━━━━━━━━━━━━━━━━━━
 🚀 Deploy Your Royal Bot Now
