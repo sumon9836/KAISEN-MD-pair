@@ -1,235 +1,265 @@
 <!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="theme-color" content="#ff3c72">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kaisen-MD Pair Code</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Poppins', sans-serif; overflow-x: hidden; }
-    video#bg-video {
-      position: fixed; top: 50%; left: 50%; min-width: 100%; min-height: 100%;
-      width: auto; height: auto; z-index: -2; transform: translate(-50%, -50%);
-      object-fit: cover; opacity: 0.3;
-    }
-    .overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(135deg, rgba(255, 182, 193, 0.9), rgba(255, 240, 245, 0.9));
-      z-index: -1;
-    }
-    .container {
-      display: flex; flex-direction: column; align-items: center;
-      justify-content: center; min-height: 100vh; padding: 20px;
-    }
-    .back-btn {
-      position: absolute; top: 20px; left: 20px; background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.3); color: #6b1e63;
-      padding: 10px 15px; border-radius: 50px; cursor: pointer;
-      backdrop-filter: blur(10px); transition: all 0.3s ease;
-      text-decoration: none; display: flex; align-items: center; gap: 5px;
-    }
-    .back-btn:hover { background: rgba(255, 255, 255, 0.3); transform: translateX(-3px); }
-    .box {
-      width: 100%; max-width: 400px; padding: 40px 30px; text-align: center;
-      background: rgba(255, 255, 255, 0.95); border-radius: 25px;
-      box-shadow: 0 25px 50px rgba(255, 105, 180, 0.3); backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    .logo { margin-bottom: 30px; }
-    .logo i { color: #ff1493; animation: heartbeat 2s ease-in-out infinite; }
-    .logo h3 { color: #6b1e63; font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; }
-    .logo h6 { color: #8b4b8c; font-weight: 400; margin-bottom: 30px; }
-    .input-container {
-      display: flex; background: rgba(255, 255, 255, 0.8); border-radius: 15px;
-      box-shadow: 0 10px 25px rgba(255, 182, 193, 0.2); padding: 5px;
-      margin-bottom: 20px; border: 2px solid transparent;
-    }
-    .input-container:focus-within {
-      border-color: #ff1493; box-shadow: 0 0 20px rgba(255, 20, 147, 0.3);
-    }
-    .input-container input {
-      flex: 1; border: none; padding: 15px 20px; font-size: 1rem;
-      color: #6b1e63; background: transparent; border-radius: 10px; outline: none;
-    }
-    .input-container input::placeholder { color: #c086c0; }
-    .input-container button {
-      padding: 15px 25px; background: linear-gradient(135deg, #ff8da5, #ff3c72);
-      color: white; font-weight: 600; border: none; border-radius: 10px;
-      cursor: pointer; transition: all 0.3s ease; min-width: 100px;
-    }
-    .input-container button:hover:not(:disabled) {
-      background: linear-gradient(135deg, #ff5e7a, #ff2a5c);
-      transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 60, 114, 0.4);
-    }
-    .input-container button:disabled { opacity: 0.6; cursor: not-allowed; }
-    .status-message {
-      margin: 20px 0; padding: 15px; border-radius: 10px;
-      font-weight: 500; display: none;
-    }
-    .status-message.show { display: block; animation: fadeIn 0.3s ease-in; }
-    .status-message.error {
-      background: rgba(255, 107, 107, 0.1); color: #d63031;
-      border: 1px solid rgba(255, 107, 107, 0.3);
-    }
-    .status-message.warning {
-      background: rgba(253, 203, 110, 0.1); color: #e17055;
-      border: 1px solid rgba(253, 203, 110, 0.3);
-    }
-    .status-message.success {
-      background: rgba(0, 184, 148, 0.1); color: #00b894;
-      border: 1px solid rgba(0, 184, 148, 0.3);
-    }
-    .code-display {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white; padding: 20px; border-radius: 15px; margin: 20px 0;
-      cursor: pointer; transition: all 0.3s ease; position: relative;
-    }
-    .code-display:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4); }
-    .code-display::before {
-      content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
-    }
-    .code-display:hover::before { left: 100%; }
-    .code-text { font-size: 1.5rem; font-weight: 700; margin-bottom: 10px; }
-    .copy-instruction { font-size: 0.9rem; opacity: 0.9; }
-    .loading {
-      display: inline-block; width: 20px; height: 20px;
-      border: 3px solid rgba(255, 255, 255, 0.3); border-radius: 50%;
-      border-top-color: #fff; animation: spin 1s ease-in-out infinite;
-    }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @media (max-width: 500px) {
-      .box { margin: 20px; padding: 30px 20px; }
-      .input-container { flex-direction: column; gap: 10px; }
-      .input-container input, .input-container button {
-        width: 100%; border-radius: 10px;
-      }
-    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }body {
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+  background: linear-gradient(-45deg, #000000, #001133, #003366, #000000);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+video#bg-video {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -2;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  opacity: 0.15;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+  animation: fadeIn 1s ease;
+}
+
+.logo i {
+  font-size: 3rem;
+  color: #3399ff;
+  animation: heartbeat 2s infinite;
+}
+
+.logo h3 {
+  color: #ffffff;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+.logo h6 {
+  color: #cccccc;
+  font-weight: 400;
+  margin-top: 10px;
+}
+
+.input-container {
+  margin-top: 30px;
+  display: flex;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.input-container input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: white;
+  font-size: 1rem;
+  padding: 10px;
+}
+
+.input-container input::placeholder {
+  color: #aaaaaa;
+}
+
+.input-container button {
+  background: linear-gradient(135deg, #0033ff, #00aaff);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.input-container button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 170, 255, 0.4);
+}
+
+#result, #status-message {
+  margin-top: 20px;
+  color: #ffffff;
+}
+
+.code-display {
+  background: linear-gradient(135deg, #0033ff, #00aaff);
+  padding: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.code-display:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 170, 255, 0.4);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@media (max-width: 500px) {
+  .input-container {
+    flex-direction: column;
+  }
+  .input-container button {
+    width: 100%;
+  }
+}
+
   </style>
 </head>
 <body>
   <video autoplay muted loop id="bg-video">
-    <source src="https://files.catbox.moe/78zfu0.mp4" type="video/mp4" />
-    Your browser does not support HTML5 video.
+    <source src="https://files.catbox.moe/6c30io.mp4" type="video/mp4" />
   </video>
   <div class="overlay"></div>
-  <a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
   <div class="container">
     <div class="box">
       <div class="logo">
-        <i class="fa fa-heart fa-3x"></i>
+        <i class="fas fa-heart"></i>
         <h3>Kaisen-MD</h3>
         <h6>Enter your WhatsApp number with country code</h6>
       </div>
       <div class="input-container">
-        <input placeholder="e.g., 917000000000" type="text" id="number" maxlength="15" inputmode="tel">
-        <button id="submit"><span class="btn-text">Generate</span></button>
+        <input id="number" placeholder="e.g. 917000000000" maxlength="15" />
+        <button id="submit">Generate</button>
       </div>
-      <div id="status-message" class="status-message"></div>
+      <div id="status-message"></div>
       <div id="result"></div>
     </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
   <script>
+
+
+ const video = document.getElementById('bg-video');
+        
+        // Enhanced video handling
+        video.addEventListener('loadeddata', () => {
+            video.play().catch(e => console.log('Video autoplay failed:', e));
+        });
+
+
+        // Unmute on user interaction
+        document.addEventListener('click', function() {
+            if (video.muted) {
+                video.muted = false;
+                video.volume = 0.3;
+            }
+        }, { once: true });
+
+
+
+    
     const numberInput = document.getElementById("number");
     const submitBtn = document.getElementById("submit");
     const statusMessage = document.getElementById("status-message");
-    const result = document.getElementById("result");
-    const btnText = submitBtn.querySelector('.btn-text');
-    let isProcessing = false;numberInput.addEventListener('input', function () {
-  this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15);
-});
+    const result = document.getElementById("result");function showStatus(message, type = 'info') {
+  statusMessage.textContent = message;
+  statusMessage.style.color = type === 'error' ? '#ff4d4d' : type === 'success' ? '#00ffcc' : '#ffffff';
+}
 
 async function copyToClipboard(text) {
   try {
     await navigator.clipboard.writeText(text);
     return true;
   } catch {
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    textArea.select();
-    const success = document.execCommand('copy');
-    document.body.removeChild(textArea);
-    return success;
+    return false;
   }
-}
-
-function showStatus(message, type = 'error') {
-  statusMessage.textContent = message;
-  statusMessage.className = `status-message show ${type}`;
-  setTimeout(() => statusMessage.classList.remove('show'), 5000);
 }
 
 function createCodeDisplay(code) {
   const codeDiv = document.createElement('div');
   codeDiv.className = 'code-display';
-  codeDiv.innerHTML = `<div class="code-text">${code}</div><div class="copy-instruction"><i class="fas fa-copy"></i> Tap to copy code</div>`;
+  codeDiv.textContent = code;
   codeDiv.onclick = async () => {
     const success = await copyToClipboard(code);
-    if (success) {
-      codeDiv.innerHTML = '<div class="code-text"><i class="fas fa-check"></i> Copied!</div><div class="copy-instruction">Code copied to clipboard</div>';
-      codeDiv.style.background = 'linear-gradient(135deg, #00b894, #00a085)';
-      setTimeout(() => {
-        codeDiv.innerHTML = `<div class="code-text">${code}</div><div class="copy-instruction"><i class="fas fa-copy"></i> Tap to copy code</div>`;
-        codeDiv.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
-      }, 2000);
-    } else {
-      showStatus('Failed to copy code. Please copy manually.', 'error');
-    }
+    codeDiv.textContent = success ? 'Copied!' : code;
+    setTimeout(() => codeDiv.textContent = code, 2000);
   };
   return codeDiv;
 }
 
-submitBtn.addEventListener("click", async function(e) {
-  e.preventDefault();
-  if (isProcessing) return;
-  const phoneNumber = numberInput.value.replace(/[^0-9]/g, '');
-  if (!phoneNumber || phoneNumber.length < 10 || phoneNumber.length > 15) {
-    showStatus('Enter a valid WhatsApp number with country code (10-15 digits).', 'error');
+submitBtn.addEventListener("click", async () => {
+  const phoneNumber = numberInput.value.replace(/\D/g, '');
+  if (!phoneNumber || phoneNumber.length < 10) {
+    showStatus("Please enter a valid number", "error");
     return;
   }
-  isProcessing = true;
-  submitBtn.disabled = true;
-  btnText.innerHTML = '<div class="loading"></div>';
-  result.innerHTML = '';
-  showStatus('Generating pair code... Please wait', 'warning');
+  showStatus("Generating code...", "info");
+  result.innerHTML = "";
   try {
-    const res = await axios.get(`/code?number=${phoneNumber}`); // change endpoint if needed
-    const code = res.data?.code;
-    if (!code || typeof code !== 'string') throw new Error('Invalid response');
-    numberInput.value = `+${phoneNumber}`;
-    numberInput.style.color = '#00b894';
-    numberInput.style.fontWeight = '600';
-    showStatus('Pair code generated successfully!', 'success');
-    result.appendChild(createCodeDisplay(code));
-    const note = document.createElement('div');
-    note.innerHTML = `<p style="color: #6b1e63; font-size: 0.9rem; margin-top: 15px;"><i class="fas fa-info-circle"></i> Copy this code and paste in WhatsApp Web > Link a Device</p>`;
-    result.appendChild(note);
-  } catch (err) {
-    console.error(err);
-    let msg = 'Failed to generate pair code. ';
-    if (err.code === 'ECONNABORTED') msg += 'Request timed out.';
-    else if (err.response?.status === 429) msg += 'Too many requests.';
-    else if (err.response?.status >= 500) msg += 'Server error.';
-    else msg += 'Check your number and try again.';
-    showStatus(msg, 'error');
-  } finally {
-    isProcessing = false;
-    submitBtn.disabled = false;
-    btnText.textContent = 'Generate';
+    const res = await axios.get(`/code?number=${phoneNumber}`);
+    if (res.data && res.data.code) {
+      showStatus("Code generated successfully", "success");
+      result.appendChild(createCodeDisplay(res.data.code));
+    } else {
+      showStatus("Failed to get code", "error");
+    }
+  } catch {
+    showStatus("Error connecting to server", "error");
   }
 });
-
-numberInput.addEventListener('keypress', function(e) {
-  if (e.key === 'Enter' && !isProcessing) submitBtn.click();
-});
-numberInput.focus();
 
   </script>
 </body>
